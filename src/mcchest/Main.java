@@ -16,6 +16,8 @@
 package mcchest;
 
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main extends javax.swing.JFrame {
 
@@ -25,6 +27,8 @@ public class Main extends javax.swing.JFrame {
     public void setIcon(){
          try {
             setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("img/logo.png")));
+            jFrame1.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("img/logo.png")));
+            jDialog1.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("img/logo.png")));
          } catch (Exception e){
              System.out.println("Error! "+e);
          }
@@ -39,6 +43,7 @@ public class Main extends javax.swing.JFrame {
     int bId = 1;
     int slot = 1;
     int amt = 1;
+    int dmg = 0;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,6 +60,12 @@ public class Main extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jDialog1 = new javax.swing.JDialog();
+        jButton7 = new javax.swing.JButton();
+        jSlider1 = new javax.swing.JSlider();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
@@ -100,14 +111,53 @@ public class Main extends javax.swing.JFrame {
                 jButton2MousePressed(evt);
             }
         });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/blocks/stone_granite.png"))); // NOI18N
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton3MousePressed(evt);
+            }
+        });
 
-        jButton4.setText("jButton4");
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/blocks/stone_granite_smooth.png"))); // NOI18N
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton4MousePressed(evt);
+            }
+        });
 
-        jButton5.setText("jButton5");
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/blocks/stone_diorite.png"))); // NOI18N
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton5MousePressed(evt);
+            }
+        });
 
-        jButton6.setText("jButton6");
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/blocks/stone_diorite_smooth.png"))); // NOI18N
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton6MousePressed(evt);
+            }
+        });
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/blocks/stone_andesite.png"))); // NOI18N
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton8MousePressed(evt);
+            }
+        });
+
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/blocks/stone_andesite_smooth.png"))); // NOI18N
+        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton9MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -123,7 +173,11 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6)
-                .addGap(0, 415, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton9)
+                .addGap(0, 377, Short.MAX_VALUE))
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,8 +188,65 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton4)
                         .addComponent(jButton5)
-                        .addComponent(jButton6)))
+                        .addComponent(jButton6))
+                    .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton8)
+                        .addComponent(jButton9)))
                 .addGap(0, 407, Short.MAX_VALUE))
+        );
+
+        jDialog1.setTitle("McChest - Item Amount");
+        jDialog1.setMinimumSize(new java.awt.Dimension(230, 150));
+        jDialog1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                jDialog1ComponentResized(evt);
+            }
+        });
+
+        jButton7.setText("Ok");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton7MousePressed(evt);
+            }
+        });
+
+        jSlider1.setMaximum(64);
+        jSlider1.setMinimum(1);
+        jSlider1.setValue(32);
+        jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider1StateChanged(evt);
+            }
+        });
+
+        jLabel5.setText("32");
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDialog1Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton7)
+                            .addComponent(jLabel5))))
+                .addContainerGap(178, Short.MAX_VALUE))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton7)
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -186,6 +297,7 @@ public class Main extends javax.swing.JFrame {
                 jLabel4MousePressed(evt);
             }
         });
+
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/inv/square.png"))); // NOI18N
         jLabel6.setToolTipText("");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -222,7 +334,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/inv/square.png"))); // NOI18N
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -244,7 +355,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/inv/square.png"))); // NOI18N
         jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -258,7 +368,6 @@ public class Main extends javax.swing.JFrame {
                 jLabel15MousePressed(evt);
             }
         });
-
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/inv/square.png"))); // NOI18N
         jLabel16.setToolTipText("");
@@ -282,14 +391,12 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/inv/square.png"))); // NOI18N
         jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel19MousePressed(evt);
             }
         });
-
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/inv/square.png"))); // NOI18N
         jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -305,7 +412,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/inv/square.png"))); // NOI18N
         jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -313,14 +419,12 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-
         jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/inv/square.png"))); // NOI18N
         jLabel23.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel23MousePressed(evt);
             }
         });
-
 
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mcchest/IMG/inv/square.png"))); // NOI18N
         jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -406,14 +510,6 @@ public class Main extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel16)
-                                        .addGap(4, 4, 4)
-                                        .addComponent(jLabel17)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel18)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel19))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel8)
@@ -428,9 +524,17 @@ public class Main extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel27)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel28)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(271, 271, 271))
+                                        .addComponent(jLabel28))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel16)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel17)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel19)))))
+                        .addGap(12, 12, 12)))
+                .addGap(259, 259, 259))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,17 +588,14 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void generate(){
+    private void generate() throws Exception{
+        String txt = jTextArea1.getText().replace("]}}", "").replace("/summon FallingSand ~ ~ ~ {TileID:54,Time:1,TileEntityData:{Items:[", "");
         
+        jTextArea1.setText("/summon FallingSand ~ ~ ~ {TileID:54,Time:1,TileEntityData:{Items:["+txt+",{id:"+bId+",Slot:"+slot+",Count:"+amt+",Damage:"+dmg+"}]}}");
     }
     
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-        String txt = jTextArea1.getText().replace("]}}", "").replace("/summon FallingSand ~ ~ ~ {TileID:54,Time:1,TileEntityData:{Items:[", "");
-        //String text = jTextField1.getText();
-        //int amt = jSlider1.getValue();
-        //int slot = jSlider2.getValue();
         
-        //jTextArea1.setText("/summon FallingSand ~ ~ ~ {TileID:54,Time:1,TileEntityData:{Items:["+txt+",{id:"+text+",Slot:"+slot+",Count:"+amt+"}]}}");
     }//GEN-LAST:event_jButton1MousePressed
  
     private void jFrame1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jFrame1ComponentResized
@@ -503,8 +604,9 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
         bId = 1;
+        dmg = 0;
         jFrame1.setVisible(false);
-        generate();
+        jDialog1.setVisible(true);
     }//GEN-LAST:event_jButton2MousePressed
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
@@ -521,131 +623,199 @@ public class Main extends javax.swing.JFrame {
         jFrame1.setVisible(true);
     }//GEN-LAST:event_jLabel2MousePressed
 
+    private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
+        slot = 4;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel4MousePressed
+
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+        slot = 5;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
+        slot = 6;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel7MousePressed
+
+    private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
+        slot = 7;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel8MousePressed
+
+    private void jLabel9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MousePressed
+        slot = 8;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel9MousePressed
+
+    private void jLabel10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MousePressed
+        slot = 9;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel10MousePressed
+
+    private void jLabel11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MousePressed
+        slot = 10;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel11MousePressed
+
+    private void jLabel12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MousePressed
+        slot = 11;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel12MousePressed
+
+    private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
+        slot = 12;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel13MousePressed
+
+    private void jLabel14MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MousePressed
+        slot = 13;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel14MousePressed
+
+    private void jLabel15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MousePressed
+        slot = 14;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel15MousePressed
+
+    private void jLabel16MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MousePressed
+       slot = 15;
+       jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel16MousePressed
+
+    private void jLabel17MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MousePressed
+        slot = 16;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel17MousePressed
+
+    private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
+        slot = 17;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel18MousePressed
+
+    private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
+        slot = 18;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel19MousePressed
+
+    private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
+        slot = 19;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel20MousePressed
+
+    private void jLabel21MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MousePressed
+        slot = 20;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel21MousePressed
+
+    private void jLabel22MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MousePressed
+        slot = 21;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel22MousePressed
+
+    private void jLabel23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MousePressed
+        slot = 22;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel23MousePressed
+
+    private void jLabel24MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MousePressed
+        slot = 23;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel24MousePressed
+
+    private void jLabel25MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MousePressed
+        slot = 24;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel25MousePressed
+
+    private void jLabel26MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MousePressed
+        slot = 25;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel26MousePressed
+
+    private void jLabel27MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel27MousePressed
+        slot = 26;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel27MousePressed
+
+    private void jLabel28MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel28MousePressed
+        slot = 27;
+        jFrame1.setVisible(true);
+    }//GEN-LAST:event_jLabel28MousePressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MousePressed
+        bId = 1;
+        dmg = 1;
+        jFrame1.setVisible(false);
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_jButton3MousePressed
+
+    private void jButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MousePressed
+        bId = 1;
+        dmg = 2;
+        jFrame1.setVisible(false);
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_jButton4MousePressed
+
+    private void jButton7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MousePressed
+        amt = jSlider1.getValue();
+        jDialog1.setVisible(false);
+        try {
+            generate();
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton7MousePressed
+
+    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
+        int q = jSlider1.getValue();
+        String p = q+"";
+        jLabel5.setText(p);
+    }//GEN-LAST:event_jSlider1StateChanged
+
+    private void jDialog1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jDialog1ComponentResized
+        
+    }//GEN-LAST:event_jDialog1ComponentResized
+
+    private void jButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MousePressed
+        bId = 1;
+        dmg = 3;
+        jFrame1.setVisible(false);
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_jButton5MousePressed
+
+    private void jButton6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MousePressed
+        bId = 1;
+        dmg = 4;
+        jFrame1.setVisible(false);
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_jButton6MousePressed
+
+    private void jButton8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MousePressed
+        bId = 1;
+        dmg = 5;
+        jFrame1.setVisible(false);
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_jButton8MousePressed
+
+    private void jButton9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MousePressed
+        bId = 1;
+        dmg = 6;
+        jFrame1.setVisible(false);
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_jButton9MousePressed
+
+    
+    
     private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {                                     
         slot = 3;
         jFrame1.setVisible(true);
     }
-
-    private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 4;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 5;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 6;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 7;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel9MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 8;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel10MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 9;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel11MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 10;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel12MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 11;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 12;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel14MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 13;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel15MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 14;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel16MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 15;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel17MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 16;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 17;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 18;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 19;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel21MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 20;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel22MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 21;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel23MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 22;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel24MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 23;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel25MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 24;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel26MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 25;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel27MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 26;
-        jFrame1.setVisible(true);
-    }
-
-    private void jLabel28MousePressed(java.awt.event.MouseEvent evt) {                                     
-        slot = 27;
-        jFrame1.setVisible(true);
-    }
-    
+ 
     /**
      * @param args the command line arguments
      */
@@ -688,6 +858,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -712,11 +886,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSlider jSlider1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
